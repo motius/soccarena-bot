@@ -30,6 +30,9 @@ function getNextDayOfWeek(dayOfWeek) {
 
   resultDate.setDate(today.getDate() + (7 + dayOfWeek - today.getDay()) % 7)
 
+  if (resultDate.getDate() <= today.getDate())
+    resultDate.setDate(resultDate.getDate() + 7)
+
   return resultDate.toISOString().substring(0, 10)
 }
 
@@ -110,10 +113,10 @@ function prepareMail(records) {
     return 0
   })
 
-  let mailText = ""
+  let mailText = " <div> "
 
   if (records.length == 1) {
-    mailText += "I found a slot:\n"
+    mailText += "<p> I found a slot: </p>"
     mailText += mailFormat(records[0])
   } else if (records.length > 1) {
     mailText += "I found " + records.length + " slots:\n"
@@ -123,15 +126,16 @@ function prepareMail(records) {
   } else {
     return null
   }
+  mailText += " </div> "
   return mailText
 }
 
 function mailFormat(rec) {
-  return "<p>" +
-    "Court: " + rec.court + " (" + COURTS[rec.court] + " people) <br />" +
-    "Date: " + (new Date(rec.date)).toDateString() + " <br />" +
-    rec.start + " - " + rec.end + " <br />" +
-    "<a href='" + rec._id + "'>Click here to book</a></p>"
+  return " <p> " +
+    "Court: " + rec.court + " (" + COURTS[rec.court] + " people) <br /> " +
+    "Date: " + (new Date(rec.date)).toDateString() + " <br /> " +
+    rec.start + " - " + rec.end + " <br /> " +
+    "<a href='" + rec._id + "'>Click here to book</a> </p> "
 }
 
 // Send mail to receivers
