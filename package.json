@@ -1,0 +1,25 @@
+{
+  "name": "soccarena",
+  "version": "1.0.0",
+  "description": "Soccarena bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/motius/soccarena-bot.git"
+  },
+  "author": "mfkaptan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/motius/soccarena-bot/issues"
+  },
+  "homepage": "https://github.com/motius/soccarena-bot#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "nedb": "^1.8.0",
+    "nodemailer": "^2.7.0",
+    "x-ray": "^2.3.1"
+  }
+}

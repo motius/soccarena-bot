@@ -1,0 +1,16 @@
+// Download links
+module.exports = {
+  SMPT: {
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+      user: "sendmail@from.here",
+      pass: "password"
+    }
+  },
+  INTERVAL: 15 * 60 * 1000, // 15 minutes in ms
+  MAIL_FROM: '"Soccarena Bot" <sendmail@from.here>',
+  MAIL_TO: "",
+  BASE_URL: "http://kalender.soccarena-olympiapark.de/kalender/courts/courts.php?kalenderTag="
+}
