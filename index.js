@@ -33,17 +33,30 @@ function getNextDayOfWeek(dayOfWeek) {
   if (resultDate.getDate() <= today.getDate())
     resultDate.setDate(resultDate.getDate() + 7)
 
-  return resultDate.toISOString().substring(0, 10)
+  return formatDate(resultDate)
+}
+
+function formatDate(date) {
+  let tzo = -date.getTimezoneOffset(),
+    dif = tzo >= 0 ? '+' : '-',
+    pad = function(num) {
+      var norm = Math.abs(Math.floor(num));
+      return (norm < 10 ? '0' : '') + norm;
+    }
+
+  return date.getFullYear() +
+    '-' + pad(date.getMonth() + 1) +
+    '-' + pad(date.getDate())
 }
 
 // Check for an opening
 function check() {
-  console.log("Checking for empty slots... " + new Date())
+  console.log("Checking for empty slots... " + new Date().toLocaleString())
 
   let dayURL = {
-    friday: Config.BASE_URL + getNextDayOfWeek(5),
-    saturday: Config.BASE_URL + getNextDayOfWeek(6),
-    sunday: Config.BASE_URL + getNextDayOfWeek(7)
+    friday: Config.BASE_URL + getNextDayOfWeek(5), // Friday
+    saturday: Config.BASE_URL + getNextDayOfWeek(6), // Saturday
+    sunday: Config.BASE_URL + getNextDayOfWeek(0) // Sunday
   }
 
   let toEmail = []
@@ -64,7 +77,7 @@ function check() {
       if (text != null)
         return sendMail(text)
       else
-        console.log("No new slots found... " + new Date())
+        console.log("No new slots found... " + new Date().toLocaleString())
     })
 }
 
@@ -133,7 +146,7 @@ function prepareMail(records) {
 function mailFormat(rec) {
   return " <p> " +
     "Court: " + rec.court + " (" + COURTS[rec.court] + " people) <br /> " +
-    "Date: " + (new Date(rec.date)).toDateString() + " <br /> " +
+    "Date: " + (new Date(rec.date)).toLocaleDateString() + " <br /> " +
     rec.start + " - " + rec.end + " <br /> " +
     "<a href='" + rec._id + "'>Click here to book</a> </p> "
 }
@@ -149,7 +162,7 @@ function sendMail(data) {
   let mailOptions = {
     from: Config.MAIL_FROM, // sender address
     to: Config.MAIL_TO, // list of receivers
-    subject: 'Soccarena Update: ' + new Date().toUTCString(), // Subject line
+    subject: 'Soccarena Update: ' + new Date().toLocaleString(), // Subject line
     text: 'I found something', // plaintext body
     html: data
   }
